@@ -1,0 +1,87 @@
+# =========================
+# macOS
+# =========================
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Spotlight
+.Spotlight-V100
+
+# Papelera
+.Trashes
+
+# Finder
+Icon?
+
+# =========================
+# Node / frontend
+# =========================
+node_modules/
+dist/
+dist-ssr/
+*.local
+.env
+.env.*
+!.env.example
+
+# Config generado por ./deploy.sh (IDs de AWS; no versionar)
+frontend/public/config.json
+
+# Logs npm
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Artefacto del Lambda (lo genera Terraform archive_file)
+terraform/user-token-ms.zip
+user-token-ms.zip
+
+# =========================
+# Java / Maven (backend)
+# =========================
+backend/target/
+
+# =========================
+# Terraform
+# =========================
+
+# Directorio local de Terraform
+.terraform/
+
+# State de Terraform
+*.tfstate
+*.tfstate.*
+
+# Crash logs
+crash.log
+crash.*.log
+
+# Variables que podrían contener secretos
+*.tfvars
+*.tfvars.json
+
+# Archivos override locales
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Planes generados
+*.tfplan
+
+# =========================
+# Editores
+# =========================
+.vscode/
+.idea/
+
+# =========================
+# Temporales
+# =========================
+*.swp
+*.swo
+*~
