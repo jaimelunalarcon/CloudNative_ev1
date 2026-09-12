@@ -1,0 +1,55 @@
+# =============================================================================
+# DSY1107 - EA1 - Backend de solicitudes de presupuesto.
+#
+# En ECS las variables SPRING_DATASOURCE_* y BACKEND_CORS_ORIGENES_* las
+# inyecta la task (terraform/ecs.tf).
+# =============================================================================
+
+spring:
+  application:
+    name: ae1-backend
+
+  # Si SPRING_DATASOURCE_URL no viene, H2 en memoria (pruebas / local sin RDS).
+  # En ECS Terraform inyecta el JDBC de PostgreSQL.
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:h2:mem:dsy1107;MODE=PostgreSQL;DB_CLOSE_DELAY=-1;DATABASE_TO_LOWER=TRUE}
+    username: ${SPRING_DATASOURCE_USERNAME:sa}
+    password: ${SPRING_DATASOURCE_PASSWORD:}
+
+  jpa:
+    hibernate:
+      # validate: el esquema lo manda Flyway; Hibernate solo comprueba.
+      ddl-auto: validate
+    open-in-view: false
+
+  flyway:
+    enabled: true
+
+server:
+  port: 8080
+  error:
+    include-message: always
+    include-stacktrace: never
+
+backend:
+  cors:
+    # Local. En ECS se pisan con BACKEND_CORS_ORIGENES_* (incluye Amplify).
+    origenes:
+      - http://localhost:4200
+      - http://localhost:5173
+
+# /actuator/health es el health check de la task ECS.
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never
+      probes:
+        enabled: false
+
+logging:
+  level:
+    cl.duoc.dsy1107.ae1: DEBUG
