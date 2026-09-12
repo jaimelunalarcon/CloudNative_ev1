@@ -45,13 +45,9 @@ jobs:
     timeout-minutes: 10
 
     env:
-      # En duro y no en una variable del repositorio, a diferencia de ECR_REPO o
-      # API_ID: el nombre sale de "user-token-ms-${var.estudiante}" en lambda.tf
-      # y no lleva dentro ni el account_id ni la region, asi que SOBREVIVE a la
-      # rotacion de cuenta del Learner Lab. No hay nada que resincronizar.
-      #
-      # Si clonas este repo para otro estudiante, este es el valor que cambia.
-      FUNCION: user-token-ms-grupo33
+      # Sale de "user-token-ms-${var.grupo}" en lambda.tf. sincronizar-github.sh
+      # lo copia desde terraform output lambda_user_token_ms.
+      FUNCION: ${{ vars.LAMBDA_USER_TOKEN_MS }}
 
     defaults:
       run:
@@ -90,6 +86,11 @@ jobs:
         working-directory: .
         run: |
           set -euo pipefail
+
+          if [ -z "${FUNCION:-}" ]; then
+            echo "::error::Falta LAMBDA_USER_TOKEN_MS. Ejecuta ./sincronizar-github.sh"
+            exit 1
+          fi
 
           aws lambda update-function-code \
             --function-name "$FUNCION" \

@@ -34,6 +34,7 @@ gh variable set API_URL --body "$API_URL"
 gh variable set AMPLIFY_APP_ID --body "$APP_ID"
 gh variable set REDIRECT_URI --body "${AMPLIFY_URL}/"
 gh variable set AMPLIFY_BRANCH --body "main"
+gh variable set LAMBDA_USER_TOKEN_MS --body "$(terraform output -raw lambda_user_token_ms)"
 
 # 1.3.9 — ECS (si ya se aplicó ecs.tf / rds.tf)
 if terraform output -raw ecs_repositorio >/dev/null 2>&1; then

@@ -13,7 +13,7 @@ function AuthScreen({
   children,
 }: {
   title: string;
-  description: string;
+  description?: string;
   children: ReactNode;
 }) {
   return (
@@ -23,11 +23,10 @@ function AuthScreen({
         <div className="w-full max-w-md rounded-xl bg-white shadow-md ring-1 ring-black/5">
           <div className="p-7 sm:p-11">
             <h1 className="text-base/6 font-medium">{title}</h1>
-            <p className="mt-1 text-sm/5 text-gray-600">{description}</p>
+            {description ? (
+              <p className="mt-1 text-sm/5 text-gray-600">{description}</p>
+            ) : null}
             <div className="mt-8">{children}</div>
-          </div>
-          <div className="m-1.5 rounded-lg bg-gray-50 py-4 text-center text-sm/5 ring-1 ring-black/5">
-            Acceso con Amazon Cognito · OIDC + PKCE
           </div>
         </div>
       </div>
@@ -101,8 +100,8 @@ function App() {
 
   return (
     <AuthScreen
-      title="Welcome back!"
-      description="Inicia sesión con Amazon Cognito (Authorization Code + PKCE)."
+      title="Cloud Native Evaluación Parcial 1"
+      description="App Solicitud de presupuesto"
     >
       {/* PASO 1 — el usuario hace clic en Login */}
       <Button className="w-full" onClick={() => void login()}>
