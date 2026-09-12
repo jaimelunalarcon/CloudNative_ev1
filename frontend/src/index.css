@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: Switzer, system-ui, sans-serif;
+  --font-display: Switzer, system-ui, sans-serif;
+  --radius-4xl: 2rem;
+}
+
+body {
+  margin: 0;
+}
